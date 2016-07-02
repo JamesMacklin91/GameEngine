@@ -25,6 +25,12 @@ class System :
 public:
 	System();
 	virtual ~System();
+
+	SystemType GetType(){ return m_SystemType; }
+
+protected:
+
+	SystemType m_SystemType;
 };
 
 #endif

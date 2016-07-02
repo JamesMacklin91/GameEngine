@@ -1,6 +1,8 @@
 #include "WinMain.h"
 
 //Additional include files
+#include "Engine.h"
+
 #ifndef _STRING_H
 	#include "string.h"
 #endif
@@ -43,15 +45,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 #endif
 
 	//Create the engine
-	//Engine* pEngine = new Engine();
+	Engine* pEngine = new Engine();
 
 	//kick off the game
-	//int result = pEngine->RunLoop();
+	int result = pEngine->RunLoop();
 
 	//Delete the engine
-	//SafeDelete(pEngine);
+	SafeDelete(pEngine);
 
-	//return result';
+	return result;
 
-	return 0;
+	
 }

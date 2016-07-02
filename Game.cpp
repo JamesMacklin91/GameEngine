@@ -3,6 +3,7 @@
 
 Game::Game(const GameData& data)
 {
+	m_SystemType = SystemType::Sys_Game;
 }
 
 

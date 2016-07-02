@@ -29,7 +29,40 @@ Engine::~Engine()
 #pragma region Public Methods
 int Engine::RunLoop()
 {
+	Context context;
 
+	if (!this->Initialize())
+		return 0;
+
+	srand(GetTickCount());
+
+	MSG msg = {};
+
+	m_EngineState = EngineState::Running;
+
+	//when there is a message available
+	//translate the message then dispatch it
+	while (msg.message != WM_QUIT && m_EngineState == EngineState::Running)
+	{
+		//CheckResize();
+
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		this->Update(context);
+		this->Draw(context);
+	}
+
+	//Logger::Log("Ending the program");
+	//Logger::WriteLogFile();
+
+	this->ShutDown();
+		return 0;
+
+	return msg.wParam;
 }
 #pragma endregion
 
@@ -49,13 +82,13 @@ int Engine::Initialize()
 
 	return true;
 }
-int Engine::Draw()
+int Engine::Draw(const Context& context)
 {
-
+	return true;
 }
-int Engine::Update()
+int Engine::Update(const Context& context)
 {
-
+	return true;
 }
 int Engine::ShutDown()
 {
@@ -78,11 +111,11 @@ int Engine::ShutDown()
 }
 
 //Add a core system to the engine
-int AddSystem(System* psys)
+int Engine::AddSystem(System* psys)
 {
-	//auto element = m_mapSystems.insert(std::make_pair(psys->GetType(), psys));
-	//if (element.second)
-		//return true;
+	auto element = m_mapSystems.insert(std::make_pair(psys->GetType(), psys));
+	if (element.second)
+		return true;
 
 	return false;
 }
@@ -90,6 +123,7 @@ int AddSystem(System* psys)
 //Create the game instance
 Game* Engine::CreateGame()
 {
+	//if adding the system failed return a nullptr
 	if (!AddSystem(new Game(GameData())))
 		return nullptr;
 
@@ -99,8 +133,8 @@ Game* Engine::CreateGame()
 		return nullptr;
 
 	//initialise if successful
-	if (!game->Initialize())
-		return nullptr;
+	//if (!game->Initialize())
+		//return nullptr;
 
 	//if everything is successful return game
 	return game;

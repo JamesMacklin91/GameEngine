@@ -8,6 +8,10 @@
 #ifndef _MAP_
 #include<map>
 #endif
+#ifndef _CONTEXT_H
+#include "context.h"
+#endif
+
 
 //Forward declaration
 enum SystemType;
@@ -43,8 +47,8 @@ private:
 
 	//returns an int as when something goes wrong we have a value for debugging purposes
 	int Initialize();
-	int Draw();
-	int Update();
+	int Draw(const Context& context);
+	int Update(const Context& context);
 	int ShutDown();
 
 	//Add a core system to the engine
