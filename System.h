@@ -3,6 +3,22 @@
 
 #include "UObject.h"
 
+//Different types of systems the engine will have
+enum SystemType
+{
+	Sys_Window,
+	Sys_Game,
+	Sys_Input,
+	Sys_Graphics,
+	Sys_GameTimer
+};
+
+//Structs
+struct SystemData
+{
+
+};
+
 class System :
 	public UObject
 {
